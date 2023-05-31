@@ -1,6 +1,3 @@
-import os
-
-
 def crear_matriz():
     matriz = []
     with open("casos_covid.csv", "r") as file:
@@ -35,15 +32,15 @@ def creat_menu():
     print(70 * '*')
 
 
-def crear_tabla_maximos_casos():
+def crear_tabla_maximos_casos(matriz):
     pass
 
 
-def crear_tabla_casos_porcentaje():
+def crear_tabla_casos_porcentaje(matriz):
     pass
 
 
-def crear_linea_tiempo():
+def crear_linea_tiempo(matriz):
     pass
 
 
