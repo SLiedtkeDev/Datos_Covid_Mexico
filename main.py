@@ -10,7 +10,7 @@ def crear_matriz():
         return matriz
 
 
-def creat_menu():
+def crear_menu():
     print("""
      _____        _               _____           _     _  
     |  __ \      | |             / ____|         (_)   | | 
@@ -45,7 +45,7 @@ def crear_linea_tiempo(matriz):
 
 
 def main():
-    creat_menu()
+    crear_menu()
     datos = crear_matriz()
     while True:
         opcion = int(input("Que opcion deseas elegir: "))
@@ -61,6 +61,6 @@ def main():
         else:
             print("Opcion no valida, vuelva a elegir")
 
-
+    print("test")
 if __name__ == "__main__":
     main()
