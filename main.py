@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 
-headers_tablas = ['Esatodo', 'Fecha', 'Maximo']
+headers_tablas = ['Estado', 'Fecha', 'Maximo']
 
 
 def grafica_linea(x, y):
