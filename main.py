@@ -1,17 +1,19 @@
 from matplotlib import pyplot as plt
 
-headers_tablas = ['Estado', 'Fecha', 'Maximo']
+headers_tablas_maximos = ['Estado', 'Fecha', 'Maximo']
+headers_tablas_porcentaje = [
+    'Estado', 'Poblacion', '# Contagiados', 'Porcentaje']
 
 
 def grafica_linea(x, y):
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(20, 15))
     ax.plot(x, y)
     plt.xticks(x, rotation=90)
     plt.show()
 
 
 def muestra_tabla(datos, headers):
-    fig, ax = plt.subplots(figsize=(20, 10))
+    fig, ax = plt.subplots(figsize=(10, 10))
     ax.table(cellText=datos, loc="center", colLabels=headers)
     ax.axis('tight')
     ax.axis('off')
@@ -54,9 +56,12 @@ def crear_menu():
 
 def tabla_plot_maximos_casos(matriz):
     matriz_casos = []
+    eje_x = []
+    eje_y = []
     for i in range(1, len(matriz)):
         F = []
         estado = matriz[i][2]
+        estado = estado.strip('\"')
         F.append(estado)
         casos_maximos = 0
         indice = None
@@ -64,11 +69,17 @@ def tabla_plot_maximos_casos(matriz):
             if int(matriz[i][j]) > casos_maximos:
                 indice = j
                 casos_maximos = int(matriz[i][j])
-        F.append(casos_maximos)
         fecha = matriz[0][indice]
         F.append(fecha)
+        F.append(casos_maximos)
         matriz_casos.append(F)
-    muestra_tabla(matriz_casos, headers_tablas)
+    muestra_tabla(matriz_casos, headers_tablas_maximos)
+    for i in range(len(matriz_casos)-1):
+        x = matriz_casos[i][0]
+        y = matriz_casos[i][2]
+        eje_x.append(x)
+        eje_y.append(y)
+    grafica_linea(x=eje_x, y=eje_y)
 
 
 def tabla_plot_casos_porcentaje(matriz):
