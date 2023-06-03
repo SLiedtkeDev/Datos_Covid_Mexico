@@ -5,16 +5,22 @@ headers_tablas_porcentaje = [
     'Estado', 'Poblacion', '# Contagiados', 'Porcentaje']
 
 
-def grafica_linea(x, y):
-    fig, ax = plt.subplots(figsize=(20, 15))
+def grafica_linea(x, y, title):
+    fig, ax = plt.subplots(figsize=(11, 6))
     ax.plot(x, y)
+    ax.grid(True)
+    ax.set_ylabel("Contagios")
+    ax.set_title(title)
     plt.xticks(x, rotation=90)
     plt.show()
 
 
 def grafica_barra(x, y):
-    fig, ax = plt.subplots(figsize=(20, 15))
+    fig, ax = plt.subplots(figsize=(11, 6))
     ax.bar(x, y)
+    ax.grid(True)
+    ax.set_ylabel("Porcentaje")
+    ax.set_title("% Contagios respecto a la población")
     plt.xticks(x, rotation=90)
     plt.show()
 
@@ -33,6 +39,7 @@ def crear_matriz_inicial():
         linea = True
         while linea:
             linea = file.readline()
+            linea = linea[:-1]
             fila = linea.split(",")
             matriz.append(fila)
         matriz = matriz[:-1]
@@ -86,7 +93,7 @@ def tabla_plot_maximos_casos(matriz):
         y = matriz_casos[i][2]
         eje_x.append(x)
         eje_y.append(y)
-    grafica_linea(x=eje_x, y=eje_y)
+    grafica_linea(x=eje_x, y=eje_y, title='Máximos  # de contagios por estado')
 
 
 def tabla_plot_casos_porcentaje(matriz):
@@ -116,8 +123,63 @@ def tabla_plot_casos_porcentaje(matriz):
     grafica_barra(x=eje_x, y=eje_y)
 
 
-def crear_linea_tiempo(matriz, lugar):
-    pass
+def crear_linea_tiempo(matriz):
+    lugar_no_encontrado = True
+    posicion_lugar = -1
+    
+    while lugar_no_encontrado:
+        lugar = input("Lugar -> ").upper()
+        posicion_lugar = buscar_lugar(matriz, lugar)
+        
+        if posicion_lugar != -1:
+            lugar_no_encontrado = False
+        else:
+            print("Lugar inválido")
+            
+    cabecera, datos = obtener_cabecera_datos_lugar(matriz, posicion_lugar)
+    lista_meses, lista_datos = obtener_listas_meses_datos(cabecera, datos)
+    titulo = "Serie de tiempo mensual para " + lugar
+    
+    grafica_linea(lista_meses, lista_datos, title=titulo)
+    
+        
+def obtener_listas_meses_datos(cabecera, datos):
+    n_columnas = len(cabecera)
+    mes_anterior = cabecera[3]
+    suma  = 0
+    lista_meses = []
+    lista_datos = []
+    
+    for i in range(3, n_columnas):       
+        dato = int(datos[i])
+        mes_actual = cabecera[i]
+        mes_numero = mes_actual.split('-')[1]
+        mes_numero_anterior = mes_anterior.split('-')[1]
+        
+        if  (mes_numero == mes_numero_anterior):
+            suma += dato
+        else:
+            lista_meses.append(mes_actual[3:])
+            lista_datos.append(suma)
+            
+            mes_anterior = mes_actual
+            suma = 0
+            
+    return lista_meses, lista_datos
+     
+     
+def obtener_cabecera_datos_lugar(matriz, posicion_lugar):
+    return matriz[0], matriz[posicion_lugar]
+    
+    
+def buscar_lugar(matriz, lugar):
+    for i in range(1, len(matriz)):
+        nombre = matriz[i][2].upper().replace("\"", '')
+        
+        if nombre == lugar:
+            return i
+        
+    return -1
 
 
 def main():
@@ -133,9 +195,7 @@ def main():
         elif opcion == 2:
             tabla_plot_casos_porcentaje(datos)
         elif opcion == 3:
-            print("opcion 3")
-            #lugar = int(input(""))
-            #crear_linea_tiempo(datos)
+            crear_linea_tiempo(datos)
         else:
             print("Opcion no valida, vuelva a elegir")
 
