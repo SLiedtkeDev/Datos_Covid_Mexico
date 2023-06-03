@@ -1,2 +1,6 @@
 # Proyecto1
-Primera entrea diplomado
+Primera entrega del diplomado Web Development con Python y Django
+Estudiantes:
+    Stephan Liedtke
+    Alberto Soto
+
