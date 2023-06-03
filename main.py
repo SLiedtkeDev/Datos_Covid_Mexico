@@ -88,6 +88,7 @@ def tabla_plot_maximos_casos(matriz):
         F.append(fecha)
         F.append(casos_maximos)
         matriz_casos.append(F)
+
     muestra_tabla(matriz_casos, headers_tablas_maximos)
 
     for i in range(len(matriz_casos)-1):
@@ -95,6 +96,7 @@ def tabla_plot_maximos_casos(matriz):
         y = matriz_casos[i][2]
         eje_x.append(x)
         eje_y.append(y)
+
     grafica_linea(x=eje_x, y=eje_y,
                   title='Máximos  # de contagios por estado')
 
@@ -118,6 +120,7 @@ def tabla_plot_casos_porcentaje(matriz):
         porcentaje_infeccion = round((suma_casos / int(poblacion)) * 100, 2)
         F.append(porcentaje_infeccion)
         matriz_porcentajes.append(F)
+
     muestra_tabla(matriz_porcentajes, headers_tablas_porcentaje)
 
     for i in range(len(matriz_porcentajes)-1):
@@ -125,6 +128,7 @@ def tabla_plot_casos_porcentaje(matriz):
         y = matriz_porcentajes[i][3]
         eje_x.append(x)
         eje_y.append(y)
+        
     grafica_barra(x=eje_x, y=eje_y)
 
 
