@@ -12,6 +12,13 @@ def grafica_linea(x, y):
     plt.show()
 
 
+def grafica_barra(x, y):
+    fig, ax = plt.subplots(figsize=(20, 15))
+    ax.bar(x, y)
+    plt.xticks(x, rotation=90)
+    plt.show()
+
+
 def muestra_tabla(datos, headers):
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.table(cellText=datos, loc="center", colLabels=headers)
@@ -83,7 +90,30 @@ def tabla_plot_maximos_casos(matriz):
 
 
 def tabla_plot_casos_porcentaje(matriz):
-    pass
+    matriz_porcentajes = []
+    eje_x = []
+    eje_y = []
+    for i in range(1, len(matriz)):
+        F = []
+        estado = matriz[i][2]
+        estado = estado.strip('\"')
+        F.append(estado)
+        poblacion = matriz[i][1]
+        F.append(poblacion)
+        suma_casos = 0
+        for j in range(4, len(matriz[0])):
+            suma_casos += int(matriz[i][j])
+        F.append(suma_casos)
+        porcentaje_infeccion = round((suma_casos / int(poblacion)) * 100, 2)
+        F.append(porcentaje_infeccion)
+        matriz_porcentajes.append(F)
+    muestra_tabla(matriz_porcentajes, headers_tablas_porcentaje)
+    for i in range(len(matriz_porcentajes)-1):
+        x = matriz_porcentajes[i][0]
+        y = matriz_porcentajes[i][3]
+        eje_x.append(x)
+        eje_y.append(y)
+    grafica_barra(x=eje_x, y=eje_y)
 
 
 def crear_linea_tiempo(matriz):
@@ -101,9 +131,9 @@ def main():
         elif opcion == 1:
             tabla_plot_maximos_casos(datos)
         elif opcion == 2:
-            tabla_plot_casos_porcentaje()
+            tabla_plot_casos_porcentaje(datos)
         elif opcion == 3:
-            crear_linea_tiempo()
+            crear_linea_tiempo(datos)
         else:
             print("Opcion no valida, vuelva a elegir")
 
