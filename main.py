@@ -116,7 +116,7 @@ def tabla_plot_casos_porcentaje(matriz):
     grafica_barra(x=eje_x, y=eje_y)
 
 
-def crear_linea_tiempo(matriz):
+def crear_linea_tiempo(matriz, lugar):
     pass
 
 
@@ -133,6 +133,7 @@ def main():
         elif opcion == 2:
             tabla_plot_casos_porcentaje(datos)
         elif opcion == 3:
+            lugar = int(input(""))
             crear_linea_tiempo(datos)
         else:
             print("Opcion no valida, vuelva a elegir")
